@@ -29,8 +29,8 @@ cd client
 npm run dev
 
 Both Frontend n Backend can be run using # npm run start
-✔️ Register as a new user or use:
 
+# Register as a new user or use:
 Demo Login:
 Email: demo@connect.com  
 Password: 12345678
