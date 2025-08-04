@@ -1,28 +1,29 @@
-const express = require('express');
-const Post = require('../models/Post');
+const express = require("express");
 const router = express.Router();
-const authMiddleware = require('../middleware/authMiddleware');
+const Post = require("../models/Post");
 
-
-router.post('/', async (req, res) => {
-  const post = await Post.create(req.body);
-  res.json(post);
+// ✅ GET all posts
+router.get("/", async (req, res) => {
+  try {
+    const posts = await Post.find();
+    res.status(200).json(posts);
+  } catch (err) {
+    console.error("Error fetching posts:", err);
+    res.status(500).json({ error: "Failed to fetch posts" });
+  }
 });
 
-router.get('/', async (req, res) => {
-  const posts = await Post.find().sort({ createdAt: -1 });
-  res.json(posts);
-});
-
-router.get('/user/:id', async (req, res) => {
-  const posts = await Post.find({ userId: req.params.id });
-  res.json(posts);
-});
-router.post('/', authMiddleware, async (req, res) => {
-  const { content, image } = req.body;
-  const post = await Post.create({ content, image, author: req.user.id });
-  const fullPost = await post.populate("author", "name");
-  res.json(fullPost);
+// ✅ CREATE post
+router.post("/", async (req, res) => {
+  try {
+    const { title, content, author } = req.body;
+    const newPost = new Post({ title, content, author });
+    await newPost.save();
+    res.status(201).json(newPost);
+  } catch (err) {
+    console.error("Error creating post:", err);
+    res.status(500).json({ error: "Failed to create post" });
+  }
 });
 
 module.exports = router;
