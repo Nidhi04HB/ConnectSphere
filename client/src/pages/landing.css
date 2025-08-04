@@ -1,0 +1,10 @@
+.landing-container {
+  height: 100vh;
+  background: url("https://images.unsplash.com/photo-1522199710521-72d69614c702?fit=crop&w=1950&q=80") no-repeat center center/cover;
+  position: relative;
+}
+
+.overlay {
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+}
